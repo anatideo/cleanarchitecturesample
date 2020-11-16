@@ -19,6 +19,10 @@ class ContactsActivity : AppCompatActivity(R.layout.activity_contacts) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.onGetContacts()
     }
 
@@ -32,15 +36,15 @@ class ContactsActivity : AppCompatActivity(R.layout.activity_contacts) {
             }
         }
     }
-
+    
     private fun setLoading(show: Boolean) {
         user_list_progress_bar.visibility = if (show) View.VISIBLE else View.VISIBLE
     }
 
     private fun setList(list: List<ViewContact>) {
-        recyclerView.apply {
-            adapter = UserListAdapter().apply { users = list }
+        with(recyclerView) {
             layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = ContactListAdapter(list)
         }
     }
 
@@ -49,6 +53,7 @@ class ContactsActivity : AppCompatActivity(R.layout.activity_contacts) {
     }
 
     private fun setEmptyList() {
-        Toast.makeText(this@ContactsActivity, getString(R.string.empty_list), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@ContactsActivity, getString(R.string.empty_list), Toast.LENGTH_SHORT)
+            .show()
     }
 }

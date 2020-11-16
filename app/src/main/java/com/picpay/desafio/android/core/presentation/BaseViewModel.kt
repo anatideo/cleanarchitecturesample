@@ -28,7 +28,7 @@ abstract class BaseViewModel : ViewModel() {
     inline fun <T : Any> Single<T>.subscribeOnUi(
         crossinline onSubscribe: () -> Unit = {},
         crossinline afterTerminate: () -> Unit = {},
-        crossinline onError: (Throwable) -> Boolean = { false },
+        crossinline onError: (Throwable) -> Unit = {},
         crossinline onSuccess: (T) -> Unit = {}
     ): Disposable {
         return observeOn(AndroidSchedulers.mainThread())
@@ -38,9 +38,8 @@ abstract class BaseViewModel : ViewModel() {
             .subscribeBy(
                 onSuccess = { result: T -> onSuccess(result) },
                 onError = { error ->
-                    if (!onError(error)) {
-                        error.printStackTrace()
-                    }
+                    onError(error)
+                    error.printStackTrace()
                 }
             )
             .disposeOnCleared()

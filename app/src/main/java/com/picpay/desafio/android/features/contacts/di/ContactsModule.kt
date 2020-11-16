@@ -1,8 +1,16 @@
 package com.picpay.desafio.android.features.contacts.di
 
-import com.picpay.desafio.android.features.contacts.data.ContactsRepository
-import com.picpay.desafio.android.features.contacts.data.ContactsRepositoryImpl
+import com.picpay.desafio.android.features.contacts.data.localsources.ContactsLocalSource
+import com.picpay.desafio.android.features.contacts.data.localsources.ContactsLocalSourceImpl
+import com.picpay.desafio.android.features.contacts.data.mappers.ContactMapper
+import com.picpay.desafio.android.features.contacts.data.mappers.DataContactMapper
 import com.picpay.desafio.android.features.contacts.data.network.ContactsApi
+import com.picpay.desafio.android.features.contacts.data.repositories.ContactsCacheRepositoryImpl
+import com.picpay.desafio.android.features.contacts.data.repositories.ContactsRepositoryImpl
+import com.picpay.desafio.android.features.contacts.domain.repositories.ContactsCacheRepository
+import com.picpay.desafio.android.features.contacts.domain.repositories.ContactsRepository
+import com.picpay.desafio.android.features.contacts.domain.usecases.ContactsUseCase
+import com.picpay.desafio.android.features.contacts.domain.usecases.ContactsUseCaseImpl
 import com.picpay.desafio.android.features.contacts.presentation.ContactsViewModel
 import com.picpay.desafio.android.features.contacts.presentation.mappers.ViewContactMapper
 import okhttp3.OkHttpClient
@@ -17,10 +25,42 @@ object ContactsModule {
     private const val CONTACTS_URL = "http://careers.picpay.com/tests/mobdev/"
 
     val instance = module {
+        // data
         single<ContactsApi> { createWebService(url = CONTACTS_URL) }
-        single<ContactsRepository> { ContactsRepositoryImpl(contactsApi = get()) }
+        single<ContactsRepository> {
+            ContactsRepositoryImpl(
+                contactsApi = get(),
+                contactMapper = get()
+            )
+        }
+        single<ContactsCacheRepository> {
+            ContactsCacheRepositoryImpl(
+                localSource = get(),
+                contactMapper = get(),
+                dataContactMapper = get()
+            )
+        }
+        single<ContactsLocalSource> {
+            ContactsLocalSourceImpl(
+                sharedPreferences = get(),
+                gson = get()
+            )
+        }
+        single { DataContactMapper() }
+
+        // domain
+        single<ContactsUseCase> {
+            ContactsUseCaseImpl(
+                coreLocalSource = get(),
+                contactsRepository = get(),
+                contactsCacheRepository = get()
+            )
+        }
+        single { ContactMapper() }
+
+        // presentation
+        viewModel { ContactsViewModel(contactsUseCase = get(), viewContactMapper = get()) }
         single { ViewContactMapper() }
-        viewModel { ContactsViewModel(contactsRepository = get(), viewContactMapper = get()) }
     }
 
     private inline fun <reified T> createWebService(url: String): T {
