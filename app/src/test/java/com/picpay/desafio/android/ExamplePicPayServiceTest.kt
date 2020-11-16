@@ -2,8 +2,8 @@ package com.picpay.desafio.android
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.picpay.desafio.android.data.network.ContactsApi
-import com.picpay.desafio.android.data.DataContact
+import com.picpay.desafio.android.contacts.data.network.ContactsApi
+import com.picpay.desafio.android.contacts.data.DataContact
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 import retrofit2.Call

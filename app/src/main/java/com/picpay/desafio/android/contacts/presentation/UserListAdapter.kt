@@ -1,11 +1,11 @@
-package com.picpay.desafio.android.presentation
+package com.picpay.desafio.android.contacts.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.data.DataContact
+import com.picpay.desafio.android.contacts.data.DataContact
 
 class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
 

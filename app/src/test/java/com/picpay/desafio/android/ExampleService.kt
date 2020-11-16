@@ -1,7 +1,7 @@
 package com.picpay.desafio.android
 
-import com.picpay.desafio.android.data.network.ContactsApi
-import com.picpay.desafio.android.data.DataContact
+import com.picpay.desafio.android.contacts.data.network.ContactsApi
+import com.picpay.desafio.android.contacts.data.DataContact
 
 class ExampleService(
     private val serviceContacts: ContactsApi
