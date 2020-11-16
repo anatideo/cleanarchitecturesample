@@ -1,9 +1,10 @@
-package com.picpay.desafio.android.contacts.di
+package com.picpay.desafio.android.features.contacts.di
 
-import com.picpay.desafio.android.contacts.data.ContactsRepository
-import com.picpay.desafio.android.contacts.data.ContactsRepositoryImpl
-import com.picpay.desafio.android.contacts.data.network.ContactsApi
-import com.picpay.desafio.android.contacts.presentation.base.ContactsViewModel
+import com.picpay.desafio.android.features.contacts.data.ContactsRepository
+import com.picpay.desafio.android.features.contacts.data.ContactsRepositoryImpl
+import com.picpay.desafio.android.features.contacts.data.network.ContactsApi
+import com.picpay.desafio.android.features.contacts.presentation.ContactsViewModel
+import com.picpay.desafio.android.features.contacts.presentation.mappers.ViewContactMapper
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -18,7 +19,8 @@ object ContactsModule {
     val instance = module {
         single<ContactsApi> { createWebService(url = CONTACTS_URL) }
         single<ContactsRepository> { ContactsRepositoryImpl(contactsApi = get()) }
-        viewModel { ContactsViewModel(contactsRepository = get()) }
+        single { ViewContactMapper() }
+        viewModel { ContactsViewModel(contactsRepository = get(), viewContactMapper = get()) }
     }
 
     private inline fun <reified T> createWebService(url: String): T {

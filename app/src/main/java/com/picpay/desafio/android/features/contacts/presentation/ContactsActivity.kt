@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.contacts.presentation
+package com.picpay.desafio.android.features.contacts.presentation
 
 import android.os.Bundle
 import android.view.View
@@ -6,9 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.contacts.data.DataContact
-import com.picpay.desafio.android.contacts.presentation.base.ContactsViewModel
-import com.picpay.desafio.android.contacts.presentation.base.observeOn
+import com.picpay.desafio.android.core.presentation.extensions.observeOn
+import com.picpay.desafio.android.features.contacts.presentation.models.ContactsViewState
+import com.picpay.desafio.android.features.contacts.presentation.models.ViewContact
 import kotlinx.android.synthetic.main.activity_contacts.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -20,10 +20,6 @@ class ContactsActivity : AppCompatActivity(R.layout.activity_contacts) {
         super.onCreate(savedInstanceState)
         setViewModel()
         viewModel.onGetContacts()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     private fun setViewModel() {
@@ -41,7 +37,7 @@ class ContactsActivity : AppCompatActivity(R.layout.activity_contacts) {
         user_list_progress_bar.visibility = if (show) View.VISIBLE else View.VISIBLE
     }
 
-    private fun setList(list: List<DataContact>) {
+    private fun setList(list: List<ViewContact>) {
         recyclerView.apply {
             adapter = UserListAdapter().apply { users = list }
             layoutManager = LinearLayoutManager(context)

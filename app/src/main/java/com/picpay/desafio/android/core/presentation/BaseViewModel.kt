@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.contacts.presentation.base
+package com.picpay.desafio.android.core.presentation
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.Single

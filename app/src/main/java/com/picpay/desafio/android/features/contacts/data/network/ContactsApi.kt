@@ -1,6 +1,6 @@
-package com.picpay.desafio.android.contacts.data.network
+package com.picpay.desafio.android.features.contacts.data.network
 
-import com.picpay.desafio.android.contacts.data.DataContact
+import com.picpay.desafio.android.features.contacts.data.models.DataContact
 import io.reactivex.Single
 import retrofit2.http.GET
 

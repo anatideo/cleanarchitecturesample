@@ -1,7 +1,7 @@
-package com.picpay.desafio.android.contacts.presentation.base
+package com.picpay.desafio.android.core.presentation
 
 import android.app.Application
-import com.picpay.desafio.android.contacts.di.ContactsModule
+import com.picpay.desafio.android.features.contacts.di.ContactsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
