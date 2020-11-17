@@ -5,9 +5,7 @@ import com.picpay.desafio.android.features.contacts.data.localsources.ContactsLo
 import com.picpay.desafio.android.features.contacts.data.mappers.ContactMapper
 import com.picpay.desafio.android.features.contacts.data.mappers.DataContactMapper
 import com.picpay.desafio.android.features.contacts.data.network.ContactsApi
-import com.picpay.desafio.android.features.contacts.data.repositories.ContactsCacheRepositoryImpl
 import com.picpay.desafio.android.features.contacts.data.repositories.ContactsRepositoryImpl
-import com.picpay.desafio.android.features.contacts.domain.repositories.ContactsCacheRepository
 import com.picpay.desafio.android.features.contacts.domain.repositories.ContactsRepository
 import com.picpay.desafio.android.features.contacts.domain.usecases.ContactsUseCase
 import com.picpay.desafio.android.features.contacts.domain.usecases.ContactsUseCaseImpl
@@ -33,13 +31,6 @@ object ContactsModule {
                 contactMapper = get()
             )
         }
-        single<ContactsCacheRepository> {
-            ContactsCacheRepositoryImpl(
-                localSource = get(),
-                contactMapper = get(),
-                dataContactMapper = get()
-            )
-        }
         single<ContactsLocalSource> {
             ContactsLocalSourceImpl(
                 sharedPreferences = get(),
@@ -51,9 +42,8 @@ object ContactsModule {
         // domain
         single<ContactsUseCase> {
             ContactsUseCaseImpl(
-                coreLocalSource = get(),
                 contactsRepository = get(),
-                contactsCacheRepository = get()
+                cacheRepository = get()
             )
         }
         single { ContactMapper() }

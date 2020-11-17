@@ -16,7 +16,14 @@ class CoreLocalSourceImpl(
 
     override fun getCacheStatus(): CacheStatus {
         val value = sharedPreferences.getString(CACHE_STATUS_KEY, null)
-        return EnumHelper.enumValueOfOrDefault(value, CacheStatus.NULL)
+        return EnumHelper.enumValueOfOrDefault(value, CacheStatus.INVALID)
+    }
+
+    override fun invalidateCache() {
+        sharedPreferences.edit().run {
+            clear()
+            commit()
+        }
     }
 
     companion object {

@@ -1,17 +1,16 @@
 package com.picpay.desafio.android.core.presentation
 
 import android.app.Application
-import com.picpay.desafio.android.core.data.localsources.CoreLocalSource
 import com.picpay.desafio.android.core.di.CoreModule
 import com.picpay.desafio.android.features.contacts.di.ContactsModule
-import com.picpay.desafio.android.features.contacts.domain.models.CacheStatus
+import com.picpay.desafio.android.features.contacts.domain.repositories.CacheRepository
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class PicPayApplication : Application() {
 
-    private val coreLocalSource: CoreLocalSource by inject()
+    private val cacheRepository: CacheRepository by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -20,7 +19,7 @@ class PicPayApplication : Application() {
             modules(MODULES)
         }
 
-        coreLocalSource.setCacheStatus(CacheStatus.NULL)
+        cacheRepository.invalidateCache()
     }
 
     companion object {
