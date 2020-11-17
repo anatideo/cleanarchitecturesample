@@ -25,7 +25,10 @@ class ContactsViewModel(
                     _viewState.value = ContactsViewState.ShowLoading(false)
                 },
                 onSuccess = { list ->
-                    _viewState.value = ContactsViewState.ShowList(list)
+                    _viewState.value = when {
+                        list.isNullOrEmpty() -> ContactsViewState.ListIsEmpty
+                        else -> ContactsViewState.ShowList(list)
+                    }
                 },
                 onError = {
                     _viewState.value = ContactsViewState.ShowError
