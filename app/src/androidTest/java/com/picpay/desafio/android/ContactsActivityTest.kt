@@ -4,8 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import com.picpay.desafio.android.features.contacts.presentation.ContactsActivity
 import okhttp3.mockwebserver.Dispatcher
@@ -13,7 +12,6 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Test
-
 
 class ContactsActivityTest {
 
@@ -46,7 +44,17 @@ class ContactsActivityTest {
         server.start(serverPort)
 
         launchActivity<ContactsActivity>().apply {
-            // TODO("validate if list displays items returned by server")
+            moveToState(Lifecycle.State.RESUMED)
+
+            onView(withId(R.id.recyclerView))
+                .check(
+                    matches(
+                        RecyclerViewMatchers.atPosition(
+                            0,
+                            hasDescendant(withText("Eduardo Santos"))
+                        )
+                    )
+                )
         }
 
         server.close()
