@@ -38,7 +38,7 @@ class ContactsActivity : AppCompatActivity(R.layout.activity_contacts) {
     }
     
     private fun setLoading(show: Boolean) {
-        user_list_progress_bar.visibility = if (show) View.VISIBLE else View.VISIBLE
+        user_list_progress_bar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun setList(list: List<ViewContact>) {

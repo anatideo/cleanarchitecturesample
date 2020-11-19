@@ -7,8 +7,12 @@ import com.picpay.desafio.android.core.data.localsources.CoreLocalSource
 import com.picpay.desafio.android.core.data.localsources.CoreLocalSourceImpl
 import com.picpay.desafio.android.core.data.repositories.CacheRepositoryImpl
 import com.picpay.desafio.android.features.contacts.domain.repositories.CacheRepository
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 object CoreModule {
     private const val PREFS_NAME = "app_general_prefs_content"
@@ -30,5 +34,15 @@ object CoreModule {
                 dataContactMapper = get()
             )
         }
+    }
+
+    inline fun <reified T> createWebService(url: String): T {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(url)
+            .client(OkHttpClient.Builder().build())
+            .build()
+            .create(T::class.java)
     }
 }

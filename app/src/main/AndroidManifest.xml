@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name="com.picpay.desafio.android.features.contacts.presentation.ContactsActivity">
+        <activity
+            android:name="com.picpay.desafio.android.features.contacts.presentation.ContactsActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

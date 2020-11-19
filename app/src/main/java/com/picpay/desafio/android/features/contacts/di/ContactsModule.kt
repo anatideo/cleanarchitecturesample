@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.features.contacts.di
 
+import com.picpay.desafio.android.core.di.CoreModule.createWebService
 import com.picpay.desafio.android.features.contacts.data.localsources.ContactsLocalSource
 import com.picpay.desafio.android.features.contacts.data.localsources.ContactsLocalSourceImpl
 import com.picpay.desafio.android.features.contacts.data.mappers.ContactMapper
@@ -11,12 +12,8 @@ import com.picpay.desafio.android.features.contacts.domain.usecases.ContactsUseC
 import com.picpay.desafio.android.features.contacts.domain.usecases.ContactsUseCaseImpl
 import com.picpay.desafio.android.features.contacts.presentation.ContactsViewModel
 import com.picpay.desafio.android.features.contacts.presentation.mappers.ViewContactMapper
-import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
 object ContactsModule {
 
@@ -51,15 +48,5 @@ object ContactsModule {
         // presentation
         viewModel { ContactsViewModel(contactsUseCase = get(), viewContactMapper = get()) }
         single { ViewContactMapper() }
-    }
-
-    private inline fun <reified T> createWebService(url: String): T {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .baseUrl(url)
-            .client(OkHttpClient.Builder().build())
-            .build()
-            .create(T::class.java)
     }
 }
