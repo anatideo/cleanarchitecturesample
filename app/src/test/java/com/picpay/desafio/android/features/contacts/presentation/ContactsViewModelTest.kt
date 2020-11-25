@@ -74,7 +74,8 @@ class ContactsViewModelTest {
         verify(exactly = 1) {
             mapper.transform(any<List<Contact>>())
             useCase.getContacts()
-        }    }
+        }
+    }
 
     @Test
     fun `GIVEN empty list WHEN getting contacts THEN show empty state`() {
@@ -132,7 +133,7 @@ class ContactsViewModelTest {
         }
     }
 
-    private fun getViewStateObserver(): Observer<ContactsViewState> = spyk(Observer {  })
+    private fun getViewStateObserver(): Observer<ContactsViewState> = spyk(Observer { })
 
     companion object {
         private val FAKE_CONTACT_LIST = listOf(

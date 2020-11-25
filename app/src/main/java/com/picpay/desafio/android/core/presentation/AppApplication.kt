@@ -8,14 +8,14 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class PicPayApplication : Application() {
+class AppApplication : Application() {
 
     private val cacheRepository: CacheRepository by inject()
 
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidContext(this@PicPayApplication)
+            androidContext(this@AppApplication)
             modules(MODULES)
         }
 

@@ -14,10 +14,10 @@ class ViewContactMapperTest {
         // Given / WHEN
         val result = mapper.transform(FAKE_INPUT)
 
-        assertEquals(FAKE_INPUT.img, result.img)
-        assertEquals(FAKE_INPUT.name, result.name)
-        assertEquals(FAKE_INPUT.id, result.id)
-        assertEquals(FAKE_INPUT.username, result.username)
+        assertEquals(FAKE_OUTPUT.img, result.img)
+        assertEquals(FAKE_OUTPUT.name, result.name)
+        assertEquals(FAKE_OUTPUT.id, result.id)
+        assertEquals(FAKE_OUTPUT.username, result.username)
     }
 
     companion object {
